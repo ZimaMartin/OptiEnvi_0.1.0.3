@@ -1,0 +1,96 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1906                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+application     buoyantSimpleFoam;
+startFrom       latestTime;
+startTime       1;
+stopAt          endTime;
+endTime         1500;
+deltaT          1;
+writeControl    timeStep;
+writeInterval   100;//0.004
+purgeWrite      0;
+writeFormat     ascii;
+writePrecision  6;
+writeCompression off;
+timeFormat      general;
+timePrecision   6;
+runTimeModifiable true;
+functions
+{
+
+    #include "functions/sampling"
+    #include "functions/convergenceCriteria"
+    #include "functions/solverInfo"
+    //#include "functions/automaticControl"
+    #include "functions/fieldFunctions"
+//
+
+heatTransferCoeff
+{
+
+    type        heatTransferCoeff;
+    libs        (fieldFunctionObjects);
+
+    field       T;
+    patches     ("wall.*");
+    htcModel    localReferenceTemperature; // fixedReferenceTemperature localReferenceTemperature ReynoldsAnalogy
+
+
+    executeControl  writeTime;
+    writeControl    writeTime;
+
+} 
+/*
+heatTransferCoeff_Reynolds
+{
+
+    type        heatTransferCoeff;
+    libs        (fieldFunctionObjects);
+
+    field       T;
+    patches     (walls);
+    htcModel    ReynoldsAnalogy; // fixedReferenceTemperature localReferenceTemperature ReynoldsAnalogy
+    UInf            (0 0 10);
+	
+    executeControl  writeTime;
+    writeControl    writeTime;
+
+} 
+
+
+#include "../boundaryConditions"
+heatTransferCoeff
+{
+
+    type        heatTransferCoeff;
+    libs        (fieldFunctionObjects);
+
+    field       T;
+    patches     (walls);
+    htcModel    ReynoldsAnalogy; // fixedReferenceTemperature localReferenceTemperature ReynoldsAnalogy
+
+
+    executeControl  writeTime;
+    writeControl    writeTime;
+    Tref		$T_in;	
+
+} 
+*/
+}
+
+
+// ************************************************************************* //

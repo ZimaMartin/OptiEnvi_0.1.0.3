@@ -1,0 +1,31 @@
+ /*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      automaticControl;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//https://www.openfoam.com/documentation/guides/latest/api/classFoam_1_1functionObjects_1_1timeActivatedFileUpdate.html
+
+automaticControl
+{
+    type              timeActivatedFileUpdate;
+    libs              (utilityFunctionObjects);
+    writeControl      timeStep;
+    writeInterval     1;
+    fileToUpdate      "$FOAM_CASE/system/fvSchemes";
+    timeVsFile
+    (
+        (-1   "$FOAM_CASE/system/fvSchemes.0")
+        (50   "$FOAM_CASE/system/fvSchemes.50")
+    );
+}

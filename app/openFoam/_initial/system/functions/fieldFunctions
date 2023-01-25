@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+yPlus
+{
+    // Mandatory entries
+    type            yPlus;
+    libs            (fieldFunctionObjects);
+    writeControl    writeTime;
+}
+
+wallHeatFlux
+{
+      type            wallHeatFlux;
+      libs            (fieldFunctionObjects);
+      writeControl    writeTime;
+}
+
+wallShearStress
+{
+      type            wallShearStress;
+      libs            (fieldFunctionObjects);
+      writeControl    writeTime;
+}
+
+MachNo
+{
+      type            MachNo;
+      libs            (fieldFunctionObjects);
+      writeControl    writeTime;
+}
+
+heatTransferCoeff
+{
+
+    type        heatTransferCoeff;
+    libs        (fieldFunctionObjects);
+
+    field       T;
+    patches     (walls);
+    writeControl    writeTime;
+    htcModel    localReferenceTemperature;
+}
+// ************************************************************************* //
